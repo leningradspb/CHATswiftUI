@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct AuthView: View {
      
@@ -15,6 +16,10 @@ struct AuthView: View {
     
     private let logInConst = "Log In"
     private let createAccountConst = "Create Account"
+    
+    init() {
+        FirebaseApp.configure()
+    }
     
     
     var body: some View {
@@ -62,7 +67,7 @@ struct AuthView: View {
             }
             .navigationTitle(isLogInMode ? logInConst : createAccountConst)
             .background(Color.init(white: 0, opacity: 0.05).ignoresSafeArea())
-        }
+        }.navigationViewStyle(.stack) // чтобы убрать принты с ошибками по констрейнтам
     }
     
     private func handleAuth() {
