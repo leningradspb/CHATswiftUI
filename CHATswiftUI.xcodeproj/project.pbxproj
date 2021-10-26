@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2627259427283DD100DDE9A9 /* CHATswiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2627259327283DD100DDE9A9 /* CHATswiftUIApp.swift */; };
-		2627259627283DD100DDE9A9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2627259527283DD100DDE9A9 /* ContentView.swift */; };
+		2627259627283DD100DDE9A9 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2627259527283DD100DDE9A9 /* AuthView.swift */; };
 		2627259827283DD300DDE9A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2627259727283DD300DDE9A9 /* Assets.xcassets */; };
 		2627259B27283DD400DDE9A9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2627259A27283DD400DDE9A9 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -16,7 +16,7 @@
 /* Begin PBXFileReference section */
 		2627259027283DD100DDE9A9 /* CHATswiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CHATswiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2627259327283DD100DDE9A9 /* CHATswiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CHATswiftUIApp.swift; sourceTree = "<group>"; };
-		2627259527283DD100DDE9A9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2627259527283DD100DDE9A9 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		2627259727283DD300DDE9A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2627259A27283DD400DDE9A9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -52,7 +52,7 @@
 			isa = PBXGroup;
 			children = (
 				2627259327283DD100DDE9A9 /* CHATswiftUIApp.swift */,
-				2627259527283DD100DDE9A9 /* ContentView.swift */,
+				2627259527283DD100DDE9A9 /* AuthView.swift */,
 				2627259727283DD300DDE9A9 /* Assets.xcassets */,
 				2627259927283DD400DDE9A9 /* Preview Content */,
 			);
@@ -137,7 +137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2627259627283DD100DDE9A9 /* ContentView.swift in Sources */,
+				2627259627283DD100DDE9A9 /* AuthView.swift in Sources */,
 				2627259427283DD100DDE9A9 /* CHATswiftUIApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
