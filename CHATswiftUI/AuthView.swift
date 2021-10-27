@@ -14,6 +14,8 @@ struct AuthView: View {
     @State var email = ""
     @State var password = ""
     @State var authStatusMessage = ""
+    @State var shouldShowImagePicker = false
+    @State var image: UIImage?
     
     private let logInConst = "Log In"
     private let createAccountConst = "Create Account"
@@ -36,9 +38,17 @@ struct AuthView: View {
                     if !isLogInMode {
                         /// иконка профиля
                         Button {
-                            print("Profile")
+                            shouldShowImagePicker.toggle()
                         } label: {
-                            Image(systemName: "person.fill").font(.system(size: 64))
+                            VStack {
+                                if let image = image {
+                                    Image(uiImage: image).resizable().scaledToFill().frame(width: 128, height: 128).cornerRadius(64)
+                                } else {
+                                    Image(systemName: "person.fill").font(.system(size: 64)).padding().foregroundColor(Color(.label))
+                                }
+                            }.overlay(RoundedRectangle(cornerRadius: 64).stroke(Color(.label), lineWidth: 3))
+                            
+                            
                         }.padding()
                     }
                     
@@ -66,6 +76,12 @@ struct AuthView: View {
             .navigationTitle(isLogInMode ? logInConst : createAccountConst)
             .background(Color.init(white: 0, opacity: 0.05).ignoresSafeArea())
         }.navigationViewStyle(.stack) // чтобы убрать принты с ошибками по констрейнтам
+            .fullScreenCover(isPresented: $shouldShowImagePicker) {
+                
+            } content: {
+                ImagePicker(image: $image)
+            }
+
     }
     
     private func handleAuth() {
@@ -107,11 +123,33 @@ struct AuthView: View {
             print("Successfully created user: \(result?.user.uid ?? "nil uid")")
             if let user = result?.user {
                 authStatusMessage = "Successfully created user: \(user.uid)"
+                persistImageToStorage()
             } else {
                 print("Failed to get result without error")
                 authStatusMessage = "Failed to get result without error"
             }
             
+        }
+    }
+    
+    private func persistImageToStorage() {
+        guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
+        let ref = FirebaseManager.shared.storage.reference(withPath: uid)
+        guard let imageData = image?.jpegData(compressionQuality: 0.5) else { return }
+        ref.putData(imageData, metadata: nil) { metadata, error in
+            if let err = error {
+                authStatusMessage = "Failed to push image to storage: \(err.localizedDescription)"
+                return
+            }
+            
+            ref.downloadURL { url, error in
+                if let err = error {
+                    authStatusMessage = "Failed to retrieve to download url: \(err.localizedDescription)"
+                    return
+                }
+                
+                authStatusMessage = "Successfully stored image by url: \(url?.absoluteString ?? "nil")"
+            }
         }
     }
 }
@@ -124,11 +162,13 @@ struct ContentView_Previews: PreviewProvider {
 
 final class FirebaseManager {
     let auth: Auth
+    let storage: Storage
     
     static let shared = FirebaseManager()
     
     init() {
         FirebaseApp.configure()
         auth = Auth.auth()
+        storage = Storage.storage()
     }
 }
