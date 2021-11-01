@@ -149,7 +149,24 @@ struct AuthView: View {
                 }
                 
                 authStatusMessage = "Successfully stored image by url: \(url?.absoluteString ?? "nil")"
+                
+                if let profileImageURL = url {
+                    storeUserInformation(profileImageURL: profileImageURL)
+                }
             }
+        }
+    }
+    
+    private func storeUserInformation(profileImageURL: URL) {
+        guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
+        let userData = ["email": email, "uid": uid, "profileImageURL": profileImageURL.absoluteString]
+        FirebaseManager.shared.firestore.collection("users").document(uid).setData(userData) { error in
+            if let err = error {
+                authStatusMessage = "Failed to storeUserInformation: \(err.localizedDescription)"
+                return
+            }
+            
+            print("SUCCESS 👍")
         }
     }
 }
@@ -163,6 +180,7 @@ struct ContentView_Previews: PreviewProvider {
 final class FirebaseManager {
     let auth: Auth
     let storage: Storage
+    let firestore: Firestore
     
     static let shared = FirebaseManager()
     
@@ -170,5 +188,6 @@ final class FirebaseManager {
         FirebaseApp.configure()
         auth = Auth.auth()
         storage = Storage.storage()
+        firestore = Firestore.firestore()
     }
 }
